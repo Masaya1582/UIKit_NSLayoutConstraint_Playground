@@ -8,68 +8,72 @@
 import UIKit
 import SwiftUI
 
+struct DummyItem {
+    let id = UUID()
+    let title: String
+    let subTitle: String
+}
+
 final class ViewController: UIViewController {
 
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "ログイン"
-        label.font = .systemFont(ofSize: 32, weight: .bold)
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private let dummyItems: [DummyItem] = [
+        DummyItem(title: "Big Title 1", subTitle: "Subtitle for item 1"),
+        DummyItem(title: "Big Title 2", subTitle: "Subtitle for item 2"),
+        DummyItem(title: "Big Title 3", subTitle: "Subtitle for item 3"),
+        DummyItem(title: "Big Title 4", subTitle: "Subtitle for item 4"),
+        DummyItem(title: "Big Title 5", subTitle: "Subtitle for item 5"),
+        DummyItem(title: "Big Title 6", subTitle: "Subtitle for item 6"),
+        DummyItem(title: "Big Title 7", subTitle: "Subtitle for item 7"),
+        DummyItem(title: "Big Title 8", subTitle: "Subtitle for item 8"),
+        DummyItem(title: "Big Title 9", subTitle: "Subtitle for item 9"),
+        DummyItem(title: "Big Title 10", subTitle: "Subtitle for item 10")
+    ]
 
-    private let idTextField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "ID"
-        tf.borderStyle = .roundedRect
-        tf.translatesAutoresizingMaskIntoConstraints = false
-        return tf
-    }()
-
-    private let passwordTextField: UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "Password"
-        tf.isSecureTextEntry = true
-        tf.borderStyle = .roundedRect
-        tf.translatesAutoresizingMaskIntoConstraints = false
-        return tf
-    }()
-
-    private let loginButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("ログインする", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureUI()
+        setupTableView()
     }
 
     private func configureUI() {
-        [titleLabel, idTextField, passwordTextField, loginButton].forEach {
-            view.addSubview($0)
-        }
+        view.addSubview(tableView)
 
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-
-            idTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 40),
-            idTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            idTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-
-            passwordTextField.topAnchor.constraint(equalTo: idTextField.bottomAnchor, constant: 20),
-            passwordTextField.leadingAnchor.constraint(equalTo: idTextField.leadingAnchor),
-            passwordTextField.trailingAnchor.constraint(equalTo: idTextField.trailingAnchor),
-
-            loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 30),
-            loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+
+    private func setupTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(DummyTableViewCell.self, forCellReuseIdentifier: DummyTableViewCell.identifier)
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
+    }
+}
+
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dummyItems.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: DummyTableViewCell.identifier, for: indexPath) as? DummyTableViewCell else {
+            return UITableViewCell()
+        }
+        let item = dummyItems[indexPath.row]
+        cell.configure(title: item.title, subTitle: item.subTitle)
+        return cell
     }
 }
 
