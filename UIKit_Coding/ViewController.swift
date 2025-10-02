@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import SnapKit
 
 final class ViewController: UIViewController {
 
@@ -15,7 +16,6 @@ final class ViewController: UIViewController {
         label.text = "ログイン"
         label.font = .systemFont(ofSize: 32, weight: .bold)
         label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
@@ -23,7 +23,6 @@ final class ViewController: UIViewController {
         let tf = UITextField()
         tf.placeholder = "ID"
         tf.borderStyle = .roundedRect
-        tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
 
@@ -32,7 +31,6 @@ final class ViewController: UIViewController {
         tf.placeholder = "Password"
         tf.isSecureTextEntry = true
         tf.borderStyle = .roundedRect
-        tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
 
@@ -40,36 +38,55 @@ final class ViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("ログインする", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        configureUI()
+        configureUIBySnapKit()
     }
 
-    private func configureUI() {
+    private func configureUIBySnapKit() {
         [titleLabel, idTextField, passwordTextField, loginButton].forEach {
             view.addSubview($0)
         }
 
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(80)
+            make.centerX.equalToSuperview()
+        }
 
-            idTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 40),
-            idTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            idTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+        idTextField.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(40)
+            make.leading.equalToSuperview().offset(40)
+            make.trailing.equalToSuperview().offset(-40)
+            make.height.equalTo(44)
+        }
 
-            passwordTextField.topAnchor.constraint(equalTo: idTextField.bottomAnchor, constant: 20),
-            passwordTextField.leadingAnchor.constraint(equalTo: idTextField.leadingAnchor),
-            passwordTextField.trailingAnchor.constraint(equalTo: idTextField.trailingAnchor),
+        passwordTextField.snp.makeConstraints { make in
+            make.top.equalTo(idTextField.snp.bottom).offset(40)
+            make.leading.equalToSuperview().offset(40)
+            make.trailing.equalToSuperview().offset(-40)
+            make.height.equalTo(44)
+        }
 
-            loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 30),
-            loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
+        loginButton.snp.makeConstraints { make in
+            make.top.equalTo(passwordTextField.snp.bottom).offset(40)
+            make.leading.equalToSuperview().offset(40)
+            make.trailing.equalToSuperview().offset(-40)
+            make.height.equalTo(50)
+        }
+
+//        let stack = UIStackView(arrangedSubviews: [idTextField, passwordTextField, loginButton])
+//        stack.axis = .vertical
+//        stack.spacing = 20
+//        view.addSubview(stack)
+//
+//        stack.snp.makeConstraints { make in
+//            make.top.equalTo(titleLabel.snp.bottom).offset(40)
+//            make.leading.trailing.equalToSuperview().inset(40)
+//        }
     }
 }
 
