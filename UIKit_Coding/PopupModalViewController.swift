@@ -58,6 +58,11 @@ final class PopupModalViewController: UIViewController {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         return button
     }()
+    private let backgroundDismissButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .clear
+        return button
+    }()
 
     private let disposeBag = DisposeBag()
 
@@ -85,11 +90,15 @@ final class PopupModalViewController: UIViewController {
 // MARK: - Binding
 private extension PopupModalViewController {
     func configureConstraints() {
-        [dimmedBackgroundView, backgroundModalView, imageView, titleLabel, goToSettingsButton, closeButton].forEach {
+        [dimmedBackgroundView, backgroundDismissButton, backgroundModalView, imageView, titleLabel, goToSettingsButton, closeButton].forEach {
             view.addSubview($0)
         }
 
         dimmedBackgroundView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
+        backgroundDismissButton.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
 
@@ -130,7 +139,7 @@ private extension PopupModalViewController {
             })
             .disposed(by: disposeBag)
 
-        closeButton.rx.tap.asSignal()
+        Signal.merge(backgroundDismissButton.rx.tap.asSignal(), closeButton.rx.tap.asSignal())
             .emit(onNext: { [weak self] in
                 self?.dismiss(animated: true)
             })
