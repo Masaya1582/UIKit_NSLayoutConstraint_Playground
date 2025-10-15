@@ -10,6 +10,8 @@
 		1E973B0F2E8E532C002D67F6 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1E973B0E2E8E532C002D67F6 /* SnapKit */; };
 		400977292E9F76D800E0FC2D /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 400977282E9F76D800E0FC2D /* RxCocoa */; };
 		4009772B2E9F76D800E0FC2D /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4009772A2E9F76D800E0FC2D /* RxSwift */; };
+		4009779B2E9F812F00E0FC2D /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 4009779A2E9F812F00E0FC2D /* Nimble */; };
+		4009779E2E9F813F00E0FC2D /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = 4009779D2E9F813F00E0FC2D /* Quick */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +90,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4009779E2E9F813F00E0FC2D /* Quick in Frameworks */,
+				4009779B2E9F812F00E0FC2D /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,6 +187,8 @@
 			);
 			name = UIKit_CodingUITests;
 			packageProductDependencies = (
+				4009779A2E9F812F00E0FC2D /* Nimble */,
+				4009779D2E9F813F00E0FC2D /* Quick */,
 			);
 			productName = UIKit_CodingUITests;
 			productReference = 40689CD32E8DF8A9009E4E7A /* UIKit_CodingUITests.xctest */;
@@ -223,6 +229,8 @@
 			packageReferences = (
 				1E973B0D2E8E532C002D67F6 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				400977272E9F76D800E0FC2D /* XCRemoteSwiftPackageReference "RxSwift" */,
+				400977992E9F812F00E0FC2D /* XCRemoteSwiftPackageReference "Nimble" */,
+				4009779C2E9F813F00E0FC2D /* XCRemoteSwiftPackageReference "Quick" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 40689CB12E8DF8A7009E4E7A /* Products */;
@@ -625,6 +633,22 @@
 				minimumVersion = 6.9.0;
 			};
 		};
+		400977992E9F812F00E0FC2D /* XCRemoteSwiftPackageReference "Nimble" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Nimble.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		4009779C2E9F813F00E0FC2D /* XCRemoteSwiftPackageReference "Quick" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Quick.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -642,6 +666,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 400977272E9F76D800E0FC2D /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		4009779A2E9F812F00E0FC2D /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 400977992E9F812F00E0FC2D /* XCRemoteSwiftPackageReference "Nimble" */;
+			productName = Nimble;
+		};
+		4009779D2E9F813F00E0FC2D /* Quick */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4009779C2E9F813F00E0FC2D /* XCRemoteSwiftPackageReference "Quick" */;
+			productName = Quick;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
