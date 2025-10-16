@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1E973B0F2E8E532C002D67F6 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1E973B0E2E8E532C002D67F6 /* SnapKit */; };
+		40057D672EA06EE2009857CB /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 40057D662EA06EE2009857CB /* RxCocoa */; };
+		40057D692EA06EE2009857CB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 40057D682EA06EE2009857CB /* RxSwift */; };
 		400977292E9F76D800E0FC2D /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 400977282E9F76D800E0FC2D /* RxCocoa */; };
 		4009772B2E9F76D800E0FC2D /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4009772A2E9F76D800E0FC2D /* RxSwift */; };
 		4009779B2E9F812F00E0FC2D /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = 4009779A2E9F812F00E0FC2D /* Nimble */; };
@@ -90,7 +92,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40057D672EA06EE2009857CB /* RxCocoa in Frameworks */,
 				4009779E2E9F813F00E0FC2D /* Quick in Frameworks */,
+				40057D692EA06EE2009857CB /* RxSwift in Frameworks */,
 				4009779B2E9F812F00E0FC2D /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,6 +193,8 @@
 			packageProductDependencies = (
 				4009779A2E9F812F00E0FC2D /* Nimble */,
 				4009779D2E9F813F00E0FC2D /* Quick */,
+				40057D662EA06EE2009857CB /* RxCocoa */,
+				40057D682EA06EE2009857CB /* RxSwift */,
 			);
 			productName = UIKit_CodingUITests;
 			productReference = 40689CD32E8DF8A9009E4E7A /* UIKit_CodingUITests.xctest */;
@@ -656,6 +662,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1E973B0D2E8E532C002D67F6 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		40057D662EA06EE2009857CB /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 400977272E9F76D800E0FC2D /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		40057D682EA06EE2009857CB /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 400977272E9F76D800E0FC2D /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
 		};
 		400977282E9F76D800E0FC2D /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;

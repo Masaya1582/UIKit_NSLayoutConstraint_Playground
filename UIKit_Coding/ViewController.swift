@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import SwiftUI
+import RxSwift
+import RxCocoa
 
 final class ViewController: UIViewController {
 
@@ -44,10 +46,22 @@ final class ViewController: UIViewController {
         return button
     }()
 
+    private let correctId = "admin"
+    private let correctPassword = "password"
+    private let disposeBag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
         setupConstraints()
+        setUIIdentifier()
+        bind()
+    }
+
+    private func setUIIdentifier() {
+        idTextField.accessibilityIdentifier = "idTextField"
+        passwordTextField.accessibilityIdentifier = "passwordTextField"
+        loginButton.accessibilityIdentifier = "loginButton"
     }
 
     private func setupConstraints() {
@@ -77,6 +91,26 @@ final class ViewController: UIViewController {
             make.leading.trailing.equalToSuperview().inset(40)
             make.height.equalTo(48)
         }
+    }
+
+    private func bind() {
+        loginButton.rx.tap.asSignal()
+            .emit(onNext: { [weak self] in
+                guard let self = self else { return }
+                let id = self.idTextField.text ?? ""
+                let password = self.passwordTextField.text ?? ""
+                if id == self.correctId && password == self.correctPassword {
+                    let alert = UIAlertController(title: "成功", message: "ログイン成功", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true)
+                } else {
+                    let alert = UIAlertController(title: "失敗", message: "IDまたはパスワードが違います", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default))
+                    self.present(alert, animated: true)
+                }
+            })
+            .disposed(by: disposeBag)
+
     }
 }
 
