@@ -16,16 +16,18 @@ final class ViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "ログイン"
-        label.textColor = .black
-        label.font = .systemFont(ofSize: 24, weight: .bold)
+        label.textColor = .label
+        label.font = .systemFont(ofSize: 28, weight: .heavy)
         label.textAlignment = .center
         return label
     }()
 
     private let idTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "ID"
+        textField.placeholder = "ユーザーID"
         textField.borderStyle = .roundedRect
+        textField.autocapitalizationType = .none
+        textField.keyboardType = .asciiCapable
         return textField
     }()
 
@@ -34,6 +36,7 @@ final class ViewController: UIViewController {
         textField.placeholder = "パスワード"
         textField.isSecureTextEntry = true
         textField.borderStyle = .roundedRect
+        textField.autocapitalizationType = .none
         return textField
     }()
 
@@ -43,6 +46,10 @@ final class ViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
         button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 8
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
         return button
     }()
 
@@ -52,7 +59,7 @@ final class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .systemGroupedBackground
         setupConstraints()
         setUIIdentifier()
         bind()
@@ -81,15 +88,15 @@ final class ViewController: UIViewController {
         }
 
         passwordTextField.snp.makeConstraints { make in
-            make.top.equalTo(idTextField.snp.bottom).offset(40)
+            make.top.equalTo(idTextField.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview().inset(40)
             make.height.equalTo(44)
         }
 
         loginButton.snp.makeConstraints { make in
-            make.top.equalTo(passwordTextField.snp.bottom).offset(40)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(30)
             make.leading.trailing.equalToSuperview().inset(40)
-            make.height.equalTo(48)
+            make.height.equalTo(50)
         }
     }
 
@@ -99,18 +106,15 @@ final class ViewController: UIViewController {
                 guard let self = self else { return }
                 let id = self.idTextField.text ?? ""
                 let password = self.passwordTextField.text ?? ""
-                if id == self.correctId && password == self.correctPassword {
-                    let alert = UIAlertController(title: "成功", message: "ログイン成功", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default))
-                    self.present(alert, animated: true)
-                } else {
-                    let alert = UIAlertController(title: "失敗", message: "IDまたはパスワードが違います", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default))
-                    self.present(alert, animated: true)
-                }
+                let (title, message) = id == self.correctId && password == self.correctPassword
+                ? ("成功", "ログイン成功")
+                : ("失敗", "IDまたはパスワードが違います")
+
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true)
             })
             .disposed(by: disposeBag)
-
     }
 }
 

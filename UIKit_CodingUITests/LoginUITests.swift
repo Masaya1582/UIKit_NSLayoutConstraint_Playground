@@ -22,52 +22,41 @@ final class LoginUITests: QuickSpec {
             app.launch()
         }
 
-        describe("Login Screen") {
-            context("when correct credentials are entered") {
+        describe("Login Flow") {
+            func enterCredentials(id: String, password: String) {
+                let idField = app.textFields["idTextField"]
+                let passwordField = app.secureTextFields["passwordTextField"]
+                let loginButton = app.buttons["loginButton"]
+
+                expect(idField.waitForExistence(timeout: 1)).to(beTrue())
+                expect(passwordField.exists).to(beTrue())
+                expect(loginButton.exists).to(beTrue())
+
+                idField.tap()
+                idField.typeText(id)
+
+                passwordField.tap()
+                passwordField.typeText(password)
+
+                loginButton.tap()
+            }
+
+
+            context("when valid credentials are entered") {
                 it("shows success alert") {
-                    let idField = app.textFields["idTextField"]
-                    let passwordField = app.secureTextFields["passwordTextField"]
-                    let loginButton = app.buttons["loginButton"]
-
-                    expect(idField.exists).to(beTrue())
-                    expect(passwordField.exists).to(beTrue())
-                    expect(loginButton.exists).to(beTrue())
-
-                    idField.tap()
-                    idField.typeText("admin")
-
-                    passwordField.tap()
-                    passwordField.typeText("password")
-
-                    loginButton.tap()
-
-                    let successAlert = app.alerts["成功"]
-                    expect(successAlert.waitForExistence(timeout: 2)).to(beTrue())
-                    expect(successAlert.staticTexts["ログイン成功"].exists).to(beTrue())
+                    enterCredentials(id: "admin", password: "password")
+                    let alert = app.alerts["成功"]
+                    expect(alert.waitForExistence(timeout: 2)).to(beTrue())
+                    expect(alert.staticTexts["ログイン成功"].exists).to(beTrue())
                 }
             }
 
-            context("when incorrect credentials are entered") {
+            context("when invalid credentials are entered") {
                 it("shows failure alert") {
-                    let idField = app.textFields["idTextField"]
-                    let passwordField = app.secureTextFields["passwordTextField"]
-                    let loginButton = app.buttons["loginButton"]
-
-                    expect(idField.exists).to(beTrue())
-                    expect(passwordField.exists).to(beTrue())
-                    expect(loginButton.exists).to(beTrue())
-
-                    idField.tap()
-                    idField.typeText("wrong")
-
-                    passwordField.tap()
-                    passwordField.typeText("credentials")
-
-                    loginButton.tap()
-
-                    let failureAlert = app.alerts["失敗"]
-                    expect(failureAlert.waitForExistence(timeout: 2)).to(beTrue())
-                    expect(failureAlert.staticTexts["IDまたはパスワードが違います"].exists).to(beTrue())
+                    enterCredentials(id: "wrong", password: "pass")
+                    let alert = app.alerts["失敗"]
+                    expect(alert.waitForExistence(timeout: 2)).to(beTrue())
+                    expect(alert.staticTexts["IDまたはパスワードが違います"].exists).to(beTrue())
                 }
             }
         }
